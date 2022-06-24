@@ -12,3 +12,4 @@ nbconvert==6.5.0
 jupyterlite==0.1.0b7
 lightning
 jupyterlab==3.3.3
+imageio-ffmpeg==0.4.7

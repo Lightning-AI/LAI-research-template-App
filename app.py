@@ -135,21 +135,15 @@ class ResearchApp(L.LightningFlow):
 
 
 if __name__ == "__main__":
-    poster_dir = "resources"
+    poster_dir = "research_poster/resources"
     paper = "https://arxiv.org/pdf/2103.00020"
-    blog = "https://openai.com/blog/clip/"
-    github = "https://github.com/openai/CLIP"
-    wandb = "https://wandb.ai/manan-goel/clip-lightning-image_retrieval/runs/1cedtohj"
     tabs = ["Blog", "Paper", "Poster", "Notebook Viewer", "Training Logs", "Model Demo: Unsplash Image Search"]
 
     app = L.LightningApp(
         ResearchApp(
             poster_dir=poster_dir,
             paper=paper,
-            blog=blog,
-            training_log_url=wandb,
-            github=github,
-            notebook_path="resources/Interacting_with_CLIP.ipynb",
+            notebook_path="demo.ipynb",
             launch_gradio=True,
             tab_order=tabs,
             launch_jupyter_lab=False,  # don't launch for public app, can expose to security vulnerability

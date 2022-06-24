@@ -4,12 +4,15 @@ import gradio as gr
 from lightning.app.components.serve import ServeGradio
 from rich.logging import RichHandler
 
-from research_app.clip_demo import CLIPDemo
+from ..model import Model
 
 FORMAT = "%(message)s"
 logging.basicConfig(level="NOTSET", format=FORMAT, datefmt="[%X]", handlers=[RichHandler()])
 
 logger = logging.getLogger(__name__)
+
+source_image_path = './assets/source.png'
+reference_video_path = './assets/driving.mp4'
 
 
 class ModelDemo(ServeGradio):
@@ -19,19 +22,19 @@ class ModelDemo(ServeGradio):
     automatically launch the Gradio interface.
     """
 
-    inputs = gr.inputs.Textbox(default="Going into the space", label="Unsplash Image Search")
+    inputs = [gr.inputs.Textbox(), gr.inputs.Textbox()]
     outputs = gr.outputs.HTML(label="Images from Unsplash")
     enable_queue = True
-    examples = [["Cat reading a book"], ["Going into the space"]]
+    examples = [[source_image_path, reference_video_path]]
 
     def __init__(self):
         super().__init__(parallel=True)
 
-    def build_model(self) -> CLIPDemo:
+    def build_model(self) -> Model:
         logger.info("loading model...")
-        clip = CLIPDemo()
+        model = Model()
         logger.info("built model!")
-        return clip
+        return model
 
-    def predict(self, query: str) -> str:
-        return self.model.predict(query)
+    def predict(self, source_image, reference_video) -> str:
+        return self.model.predict(source_image, reference_video)
